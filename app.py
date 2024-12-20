@@ -42,7 +42,7 @@ if uploaded_file is not None:
         report = city_weather_report(df[df['city'] == city])
 
         # Выберем единицы: температура в градусах Цельсия, ветер в м/с
-        UNITS = os.getenv('UNITS')
+        UNITS = 'metric'
 
         # Посмотрим данные выбранного города. Выполним запрос координат
         geo_info = requests.get(
