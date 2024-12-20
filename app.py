@@ -67,16 +67,20 @@ if uploaded_file is not None:
             # Определим сезон
             season = month_to_season[time.gmtime().tm_mon]
 
-            if is_anomalistic(season, report):
-                if cur_temperature > report['season_profile'][season+'_avg']:
-                    frase = f'В городе {city} температура аномально высокая'
-                else:
-                    frase = f'В городе {city} температура аномально низкая'
+            mean = report['season_profile'][season + '_avg']
+            sigma = report['season_profile'][season + '_std']
+
+            if cur_temperature > mean + 2 * sigma:
+                frase = f'В городе {city} температура аномально высокая'
+            elif cur_temperature < mean - 2 * sigma:
+                frase = f'В городе {city} температура аномально низкая'
+            elif cur_temperature > report['season_profile'][season+'_avg']:
+                frase = f'В городе {city} температура выше среднего'
+            elif cur_temperature < report['season_profile'][season+'_avg']:
+                frase = f'В городе {city} температура ниже среднего'
             else:
-                if cur_temperature > report['season_profile'][season+'_avg']:
-                    frase = f'В городе {city} температура выше среднего'
-                else:
-                    frase = f'В городе {city} температура ниже среднего'
+                frase = f'В городе {city} температура средняя по сезону'
+
             metric, season_stat = st.columns(2, vertical_alignment="bottom")
             metric.metric(label=frase,
                       value=f"{cur_temperature} °C",
