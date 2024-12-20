@@ -10,4 +10,4 @@
 - является ли температура аномальной,
 - выводит график изменения температуры во времени.
 
-[Приложение на сервисе Streamlit](https://salaries-survey-rus.streamlit.app/)
+[Приложение на сервисе Streamlit](https://weather-checking.streamlit.app/)
